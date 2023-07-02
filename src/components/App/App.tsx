@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import Hello from '@components/Hello';
 import World from '@components/World';
+import Race from '@components/Race';
 
 import style from './App.scss';
 
@@ -19,6 +20,7 @@ export const App = (): JSX.Element => (
         <Route path="/" element={<Hello />} />
         <Route path="/world" element={<World />} />
       </Routes>
+      <Race />
     </BrowserRouter>
   </div>
 );

@@ -1,0 +1,26 @@
+.kbTextField {
+  color:aqua;
+}
+
+.kb {
+  border-radius: 3px;
+  padding: 3px;
+
+  &Success {
+    color: #2ab574;
+  }
+
+  &Red {
+    color: white;
+    background-color: #f05755;
+  }
+
+  &Green {
+    color: white;
+    background-color: #2ab574;
+  }
+
+  &Letter {
+    color: black;
+  }
+}
