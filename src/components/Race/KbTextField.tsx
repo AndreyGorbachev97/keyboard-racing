@@ -1,10 +1,18 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState, useRef } from 'react';
 import style from './KbTextField.scss';
 
-const sampleText = 'Тестовый текс';
+const sampleText = 'Тестовый текст';
 
 export const KbTextField = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentLetterClass, setCurrentLetterClass] = useState(style.kbGreen);
   const [raceValue, setRaceValue] = useState('');
+
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    inputRef.current.focus();
+  };
 
   useEffect(() => {
     console.log('raceValue', raceValue);
@@ -12,21 +20,36 @@ export const KbTextField = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log('event.target.value', event.target.value);
-    if (sampleText.includes(event.target.value) && event.target.value.length >= raceValue.length) {
-      setRaceValue(event.target.value);
+    const inputValue = event.target.value.slice(-1);
+    if (sampleText[currentIndex] === inputValue) {
+      setCurrentLetterClass(style.kbGreen);
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentLetterClass(style.kbRed);
+      return;
     }
+
+    setRaceValue(inputValue);
   };
 
   return (
-    <div className={style.kbTextField}>
+    <div className={style.kbTextField} onClick={handleClick} onMouseDown={handleClick}>
+      <input
+        autoFocus
+        ref={inputRef}
+        onChange={handleChange}
+        value={raceValue}
+        className={style.hiddenInput}
+        type="text"
+      />
       {sampleText.split('').map((char, i) => (
-        <span className={`${style.kb} ${style.kbLetter}`} key={i}>
+        <span
+          className={`${style.kb} ${i < currentIndex ? style.kbSuccess : i === currentIndex && currentLetterClass}`}
+          key={i}
+        >
           {char}
         </span>
       ))}
-      <span className={`${style.kb} ${style.kbGreen}`}>А</span>
-      <span className={`${style.kb} ${style.kbRed}`}>А</span>
-      <span className={`${style.kb} ${style.kbSuccess}`}>А</span>
     </div>
   );
 };
