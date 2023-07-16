@@ -1,2 +1,2 @@
-export * from './CalculateCharactersPerMinute';
+export * from './calculateCharactersPerMinute';
 export * from './calculateDiffSeconds';
