@@ -1,0 +1,13 @@
+.hiddenInput {
+  left: -9999px;
+  position: absolute;
+}
+
+.kbTextField {
+  align-items: center;
+  border: 1px rgb(197, 65, 65) solid;
+  display: flex;
+  height: 60px;
+  justify-content: center;
+  padding: 20px;
+}
