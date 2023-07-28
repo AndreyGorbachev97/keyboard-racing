@@ -1,7 +1,12 @@
+.textField {
+  margin-right: 18px;
+  max-width: 600px;
+}
+
 .kb {
   border-radius: 3px;
   color: rgb(99, 99, 99);
-  padding: 3px;
+  padding: 3px 0;
 
   &Success {
     color: #2ab574;
@@ -11,10 +16,12 @@
   &Red {
     background-color: #f05755;
     color: #fff;
+    padding: 3px 2px;
   }
 
   &Green {
     background-color: #2ab574;
     color: #fff;
+    padding: 3px 2px;
   }
 }

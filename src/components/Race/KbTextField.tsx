@@ -10,7 +10,7 @@ interface KbTextFieldProps {
 export const KbTextField: React.FC<KbTextFieldProps> = ({ sampleText, currentIndex, currentLetterType }) => {
   const currentLetterClass = currentLetterType === 'success' ? style.kbGreen : style.kbRed;
   return (
-    <>
+    <div className={style.textField}>
       {sampleText.split('').map((char, i) => (
         <span
           className={`${style.kb} ${i < currentIndex ? style.kbSuccess : i === currentIndex ? currentLetterClass : ''}`}
@@ -19,6 +19,6 @@ export const KbTextField: React.FC<KbTextFieldProps> = ({ sampleText, currentInd
           {char}
         </span>
       ))}
-    </>
+    </div>
   );
 };

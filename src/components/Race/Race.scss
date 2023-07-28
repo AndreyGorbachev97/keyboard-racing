@@ -3,11 +3,14 @@
   position: absolute;
 }
 
-.kbTextField {
-  align-items: center;
-  border: 1px rgb(197, 65, 65) solid;
-  display: flex;
-  height: 60px;
-  justify-content: center;
-  padding: 20px;
+.race {
+  &InfoBlock {
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    min-height: 120px;
+    padding: 15px;
+  }
 }
