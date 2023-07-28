@@ -4,8 +4,10 @@ import { calculateCharactersPerMinute, calculateDiffSeconds } from '../../utils'
 import { KbTextField } from './KbTextField';
 import { Statistic } from './Statistic';
 import { LetterType } from '../../constants';
+import useChat from '../../ws/useChat';
+import Modal from '@components/RegisterModal/RegisterModal';
 
-const sampleText = 'Тестовый текст';
+const sampleText = 'Величайшим удовлетворением в жизни является то, что мы делаем то, чего другие считают невозможным.';
 
 let interval: any;
 
@@ -21,10 +23,11 @@ export const Race = () => {
   const [isStart, setIsStart] = useState<boolean>(false);
   const [isFinish, setIsFinish] = useState<boolean>(false);
 
+  const [inputRoom, setInputRoom] = useState<string>('');
+  const { createRoom, registerUser, getRooms, handleJoinRoom, setMessage, handleSendMessage, roomsList } = useChat();
+  console.log('roomsList', roomsList);
   // Вычисляем скорость печати символы/мин
   useEffect(() => {
-    console.log('diffSeconds', timer);
-    console.log('raceValue', raceValue);
     const speed = calculateCharactersPerMinute(currentIndex, timer);
     setSpeed(speed);
   }, [timer]);
@@ -75,8 +78,23 @@ export const Race = () => {
   };
 
   return (
-    <div className={style.kbTextField} onClick={handleClick} onMouseDown={handleClick}>
+    <>
       <div>
+        <Modal registerUser={registerUser} />
+        <div>
+          {roomsList.map((roomName, i) => (
+            <>
+              <div key={i}>{roomName}</div>
+              <button onClick={() => handleJoinRoom(roomName)}>Подключиться к комнате</button>
+            </>
+          ))}
+        </div>
+        <div>
+          <input onChange={(e) => setInputRoom(e.target.value)} value={inputRoom} type="text" />
+          <button onClick={() => createRoom(inputRoom)}>Создать комнату</button>
+        </div>
+      </div>
+      <div onClick={handleClick} onMouseDown={handleClick}>
         <input
           autoFocus
           ref={inputRef}
@@ -85,9 +103,11 @@ export const Race = () => {
           className={style.hiddenInput}
           type="text"
         />
-        <Statistic speed={speed} inputErrors={inputErrors} isFinish={isFinish} />
-        <KbTextField sampleText={sampleText} currentIndex={currentIndex} currentLetterType={currentLetterType} />
+        <div className={style.raceInfoBlock}>
+          <KbTextField sampleText={sampleText} currentIndex={currentIndex} currentLetterType={currentLetterType} />
+          <Statistic speed={speed} inputErrors={inputErrors} isFinish={isFinish} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };

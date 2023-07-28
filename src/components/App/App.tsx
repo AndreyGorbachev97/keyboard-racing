@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-import Hello from '@components/Hello';
 import World from '@components/World';
 import Race from '@components/Race';
 
@@ -17,10 +16,9 @@ export const App = (): JSX.Element => (
         <Link to="/world">World component</Link>
       </nav>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<Race />} />
         <Route path="/world" element={<World />} />
       </Routes>
-      <Race />
     </BrowserRouter>
   </div>
 );
