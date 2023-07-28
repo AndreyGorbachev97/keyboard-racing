@@ -1,18 +1,3 @@
-.hiddenInput {
-  left: -9999px;
-  position: absolute;
-}
-
-.kbTextField {
-  align-items: center;
-  border: 1px rgb(197, 65, 65) solid;
-  display: flex;
-  height: 60px;
-  justify-content: center;
-  padding: 20px;
-  // color: rgb(99, 99, 99);
-}
-
 .kb {
   border-radius: 3px;
   color: rgb(99, 99, 99);
@@ -20,6 +5,7 @@
 
   &Success {
     color: #2ab574;
+    font-family: 'Inter', sans-serif;
   }
 
   &Red {
