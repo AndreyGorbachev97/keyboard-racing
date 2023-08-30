@@ -4,8 +4,6 @@ import { calculateCharactersPerMinute, calculateDiffSeconds } from '../../utils'
 import { KbTextField } from './KbTextField';
 import { Statistic } from './Statistic';
 import { LetterType } from '../../constants';
-import useChat from '../../ws/useChat';
-import Modal from '@components/RegisterModal/RegisterModal';
 
 const sampleText = 'Величайшим удовлетворением в жизни является то, что мы делаем то, чего другие считают невозможным.';
 
@@ -23,9 +21,6 @@ export const Race = () => {
   const [isStart, setIsStart] = useState<boolean>(false);
   const [isFinish, setIsFinish] = useState<boolean>(false);
 
-  const [inputRoom, setInputRoom] = useState<string>('');
-  const { createRoom, registerUser, getRooms, handleJoinRoom, setMessage, handleSendMessage, roomsList } = useChat();
-  console.log('roomsList', roomsList);
   // Вычисляем скорость печати символы/мин
   useEffect(() => {
     const speed = calculateCharactersPerMinute(currentIndex, timer);
@@ -79,21 +74,6 @@ export const Race = () => {
 
   return (
     <>
-      <div>
-        <Modal registerUser={registerUser} />
-        <div>
-          {roomsList.map((roomName, i) => (
-            <>
-              <div key={i}>{roomName}</div>
-              <button onClick={() => handleJoinRoom(roomName)}>Подключиться к комнате</button>
-            </>
-          ))}
-        </div>
-        <div>
-          <input onChange={(e) => setInputRoom(e.target.value)} value={inputRoom} type="text" />
-          <button onClick={() => createRoom(inputRoom)}>Создать комнату</button>
-        </div>
-      </div>
       <div onClick={handleClick} onMouseDown={handleClick}>
         <input
           autoFocus

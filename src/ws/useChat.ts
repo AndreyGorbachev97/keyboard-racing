@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import { Room } from 'src/types';
 
 const useChat = () => {
   const [socket, setSocket] = useState(null);
-  const [message, setMessage] = useState('');
-  const [receivedMessage, setReceivedMessage] = useState('');
-  const [roomName, setRoomName] = useState('');
-  const [roomsList, setRoomsList] = useState([]);
+  const [message, setMessage] = useState<string>('');
+  const [receivedMessage, setReceivedMessage] = useState<string>('');
+  const [roomName, setRoomName] = useState<string>('');
+  const [roomsList, setRoomsList] = useState<Room[]>([]);
 
   useEffect(() => {
     const newSocket = io('http://localhost:3000');
@@ -25,10 +26,17 @@ const useChat = () => {
       });
 
       // Обработчик для получения списка комнат от сервера
-      socket.on('roomsList', (rooms: string[]) => {
-        setRoomsList(rooms);
+      socket.on('roomsList', (rooms: Record<string, any>) => {
+        console.log('rooms', rooms);
+        const toArray = Object.keys(rooms).map((room: string) => ({
+          ...rooms[room],
+          roomName: room,
+        }));
+        console.log('toArray', toArray);
+        setRoomsList(toArray as Room[]);
       });
 
+      // Обработчик для получения списка ошибок от серверв
       socket.on('error', (error: string) => {
         console.log('error', error);
       });
@@ -37,7 +45,7 @@ const useChat = () => {
 
   const handleSendMessage = () => {
     if (socket) {
-      socket.emit('sendMessage', message);
+      socket.emit('sendMessage', roomName, message);
     }
   };
 
@@ -51,7 +59,7 @@ const useChat = () => {
     socket.emit('registerUser', name);
   };
 
-  const handleJoinRoom = (roomName: string) => {
+  const joinRoom = (roomName: string) => {
     // Логика для присоединения к существующей комнате
     // Вызываем handleJoinRoom при клике на кнопку или другое событие
     // Вместо 'room1' используйте имя комнаты, к которой хотите присоединиться
@@ -62,6 +70,10 @@ const useChat = () => {
     socket.emit('getRooms');
   };
 
+  const leaveRoom = () => {
+    socket.emit('leaveRoom');
+  };
+
   return {
     message,
     receivedMessage,
@@ -69,9 +81,11 @@ const useChat = () => {
     setMessage,
     handleSendMessage,
     getRooms,
+    leaveRoom,
     createRoom,
     registerUser,
-    handleJoinRoom,
+    joinRoom,
+    socketID: socket?.id || '',
   };
 };
 

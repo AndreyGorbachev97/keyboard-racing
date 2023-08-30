@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -18,6 +20,7 @@ module.exports = {
     path: path.join(__dirname, './dist'),
     filename: 'app.min.js',
   },
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
@@ -73,5 +76,6 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css',
     }),
+    new CleanWebpackPlugin(),
   ],
 };

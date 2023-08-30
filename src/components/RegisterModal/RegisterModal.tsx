@@ -3,8 +3,9 @@ import styles from './RegisterModal.scss';
 
 interface RegisterModalProps {
   registerUser: (name: string) => void;
+  getRooms: () => void;
 }
-const RegisterModal: React.FC<RegisterModalProps> = ({ registerUser }) => {
+export const RegisterModal: React.FC<RegisterModalProps> = ({ registerUser, getRooms }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
   const [name, setName] = useState<string>('');
 
@@ -12,6 +13,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ registerUser }) => {
     if (name) {
       registerUser(name);
       setIsModalOpen(false);
+      getRooms();
     }
   };
 
@@ -30,5 +32,3 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ registerUser }) => {
     </div>
   );
 };
-
-export default RegisterModal;
